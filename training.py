@@ -37,7 +37,7 @@ if __name__ == '__main__':
     start      = time.time()
 
     # load data set
-    nodes_set, edges_set, flow_set = load_dataset(2000, normalize=True, do_read=True, dataset_source='./dataset/dataset_toUse.txt')  # Dictionary with 2000 sample
+    nodes_set, edges_set, flow_set = load_dataset(2000, normalize=True, do_read=True, dataset_source='./gnn_laminar_flow/dataset/dataset_toUse.txt')  # Dictionary with 2000 sample
     nodes_set_train, edges_set_train, flow_set_train, nodes_set_valid, edges_set_valid, flow_set_valid, nodes_set_test, edges_set_test, flow_set_test = split(nodes_set, edges_set, flow_set, train_ratio, valid_ratio)
     del nodes_set_test, edges_set_test, flow_set_test, nodes_set, edges_set, flow_set
 

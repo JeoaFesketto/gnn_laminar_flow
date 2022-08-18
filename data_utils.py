@@ -93,11 +93,11 @@ def split(nodes_set, edges_set, flow_set, train_ratio, valid_ratio):
     keys_test   = shape_list[index_valid:]
 
     # Save the shapes used in each dataset
-    with open('./dataset/training_dataset.txt', 'w') as f:
+    with open('./gnn_laminar_flow/dataset/training_dataset.txt', 'w') as f:
         print(*keys_train, sep='\n', file=f)
-    with open('./dataset/validation_dataset.txt', 'w') as f:
+    with open('./gnn_laminar_flow/dataset/validation_dataset.txt', 'w') as f:
         print(*keys_valid, sep='\n', file=f)
-    with open('./dataset/testing_dataset.txt', 'w') as f:
+    with open('./gnn_laminar_flow/dataset/testing_dataset.txt', 'w') as f:
         print(*keys_test, sep='\n', file=f)
 
     nodes_set_train  = {key: nodes_set[key] for key in keys_train}
@@ -119,9 +119,9 @@ def split(nodes_set, edges_set, flow_set, train_ratio, valid_ratio):
 
 def load_data(file_name):
     # Read from excel files
-    nodes = pd.read_csv('../data/nodes/'+file_name)[['x', 'y', 'Object']].values.astype('float32')
-    flow  = pd.read_csv('../data/flow/'+file_name).values.astype('float32')
-    edges = pd.read_csv('../data/edges/'+file_name).values
+    nodes = pd.read_csv('./data/nodes/'+file_name)[['x', 'y', 'Object']].values.astype('float32')
+    flow  = pd.read_csv('./data/flow/'+file_name).values.astype('float32')
+    edges = pd.read_csv('./data/edges/'+file_name).values
 
     # Remove nodes that are not connected to edges
     nodes = nodes[np.unique(edges), :]
@@ -144,7 +144,7 @@ def load_data(file_name):
     return nodes, edges, flow, minimum, maximum
 
 
-def load_dataset(num_files, normalize, do_read=False, dataset_source='./dataset/dataset_toUse.txt'):
+def load_dataset(num_files, normalize, do_read=False, dataset_source='./gnn_laminar_flow/dataset/dataset_toUse.txt'):
     """
     Load num_files data from the data direction.
     : normalize: apply a channel wise normalization to the flow field (u, v, p)
@@ -159,10 +159,10 @@ def load_dataset(num_files, normalize, do_read=False, dataset_source='./dataset/
             file_list = f.read().splitlines()
             file_list = file_list[:num_files]
     else:
-            file_list = os.listdir('../data/nodes/')[:num_files]
+            file_list = os.listdir('./data/nodes/')[:num_files]
 
     # Write the shapes used
-    with open('./dataset/dataset_used.txt', 'w') as f:
+    with open('./gnn_laminar_flow/dataset/dataset_used.txt', 'w') as f:
         print(*file_list, sep='\n', file=f)
 
     logs.info('The data set contains %s instances !\n', len(file_list))
@@ -212,7 +212,7 @@ def load_dataset(num_files, normalize, do_read=False, dataset_source='./dataset/
                                                                             max_value[1].numpy(), min_value[2].numpy(), max_value[2].numpy())
 
         # Saving Normalization parameters
-        with open('./dataset/Normalization_Parameters.txt', 'w') as f:
+        with open('./gnn_laminar_flow/dataset/Normalization_Parameters.txt', 'w') as f:
             print('The [min, max] values for:\n' +
                    '\tx-coordinates: [{},{}]\n'.format(domain_boundaries_min[0], domain_boundaries_max[0]) +
                    '\ty-coordinates: [{},{}]\n'.format(domain_boundaries_min[1], domain_boundaries_max[1]) +

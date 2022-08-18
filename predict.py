@@ -1,6 +1,6 @@
 from network_utils import *
 from training_utils import *
-from data_utils import lift_drag
+from gnn_laminar_flow.data_utils import lift_drag
 
 
 best_model   = InvariantEdgeModel(edge_feature_dims, num_filters, initializer)
